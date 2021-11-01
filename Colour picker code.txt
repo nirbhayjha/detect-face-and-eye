@@ -1,0 +1,40 @@
+How to create a software for colour picker:-
+
+import cv2
+import numpy as np
+
+def cross(x): 	#blank function
+    pass
+
+img= np.zeros((300, 512, 3), np.uint8)    #creating a black image 
+cv2.namedWindow("colour picker")     #defining the name for window
+
+#Creating a switch for window
+s1= "0:OFF \n 1:ON"      #0:OFF means off and 1:ON means on 
+cv2.createTrackbar(s1, "colour picker", 0, 1, cross)  #(function variable, window name,
+				             starting point, ending point, call blank function) 
+	#set tracker position
+cv2.createTrackbar("R", "colour picker", 0, 255, cross)
+cv2.createTrackbar("G", "colour picker", 0, 255, cross)
+cv2.createTrackbar("B", "colour picker", 0, 255, cross)
+
+while True:
+    cv2.imshow("colour picker", img)
+    k= cv2.waitKey(1)
+    if k==ord("z") & 0xFF:
+        break
+    
+	#get tracker position
+    s= cv2.getTrackbarPos(s1, "colour picker") 
+    r= cv2.getTrackbarPos("R", "colour picker") 
+    g= cv2.getTrackbarPos("G", "colour picker") 
+    b= cv2.getTrackbarPos("B", "colour picker") 
+    
+
+	#switch statement for s1 variable
+    if s==0:
+        img[:]= 0
+    else:
+        img[:]= [r,g,b]
+
+cv2.destroyAllWindows()
